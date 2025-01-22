@@ -1,8 +1,8 @@
 ## Terraformを操作
 
 ### 環境変数設定
-1. terraform-sample.tfvars を terraform.tfvars へ変更
-2. terraform.tfvars の値を自環境に合わせて変更
+1. terraform.tfvars を作成
+2. variables.td の値を自環境に合わせて設定
 
 ### Terraform
 
