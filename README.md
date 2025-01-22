@@ -33,4 +33,8 @@ terraform destroy
 
 ## GitTips
 
-### 認証ファイル等が追跡対象に入った場合
+### 認証ファイルや大きいサイズのファイルがコミット履歴に入った場合
+
+```shell
+git filter-repo --path 履歴から消したいファイル --invert-paths --force
+```
