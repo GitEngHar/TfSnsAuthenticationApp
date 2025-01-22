@@ -30,3 +30,7 @@ terraform apply
 ```shell
 terraform destroy
 ```
+
+## GitTips
+
+### 認証ファイル等が追跡対象に入った場合
