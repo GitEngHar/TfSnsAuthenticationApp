@@ -9,6 +9,7 @@ resource "aws_ecs_task_definition" "main" {
   memory                   = "512"
   network_mode             = "awsvpc"
   execution_role_arn       = "arn:aws:iam::${var.aws_account_id}:role/ecsTaskExecutionRole"
+  depends_on = [aws_lb.test]
   container_definitions    = <<EOL
 [
   {
@@ -18,6 +19,12 @@ resource "aws_ecs_task_definition" "main" {
       {
         "containerPort": 8080,
         "hostPort": 8080
+      }
+    ],
+    "environment":[
+      {
+        "name": "REDIRECT_URI",
+        "value": "http://${aws_lb.test.dns_name}:8080/callback"
       }
     ]
   }
@@ -83,6 +90,4 @@ resource "aws_ecs_service" "main" {
   }
 
 }
-
-
 

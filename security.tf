@@ -20,10 +20,11 @@ resource "aws_security_group" "sns-authentication-app-alb" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow-myip-ipv4" {
   security_group_id = aws_security_group.sns-authentication-app-alb.id
-  cidr_ipv4         = var.my_global_ip
-  from_port         = 8080
-  ip_protocol       = "tcp"
-  to_port           = 8080
+  # cidr_ipv4         = var.my_global_ip
+  cidr_ipv4   = "0.0.0.0/0"
+  from_port   = 8080
+  ip_protocol = "tcp"
+  to_port     = 8080
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow-alb-ipv4" {
