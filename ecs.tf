@@ -3,7 +3,7 @@ resource "aws_ecs_cluster" "main" {
 }
 
 resource "aws_ecs_task_definition" "main" {
-  family                   = "SnsAuthAppTaskDef"
+  family                   = "SnsAuthenticationAppTaskDef"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
@@ -25,6 +25,10 @@ resource "aws_ecs_task_definition" "main" {
       {
         "name": "REDIRECT_URI",
         "value": "http://${aws_lb.test.dns_name}:8080/callback"
+      },
+      {
+        "name": "CLIENT_ID",
+        "value": "${var.line_auth_client_id}"
       }
     ]
   }

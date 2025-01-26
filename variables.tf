@@ -15,6 +15,10 @@ variable "aws_account_id" {
 }
 
 variable "my_global_ip" {
-  description = "AWS Account ID"
+  description = "MY ACCESS IP"
   type        = string
+}
+
+variable "line_auth_client_id" {
+  type = string
 }
