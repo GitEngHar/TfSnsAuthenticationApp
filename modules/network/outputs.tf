@@ -1,4 +1,4 @@
-output "vpn_id" {
+output "vpc_id" {
   description = "The ID of the vpn"
   value = aws_vpc.main.id
 }

@@ -1,9 +1,9 @@
-output "sg_id_for_app_ecs" {
+output "sg_id_for_ecs" {
   description = "The ID of the sg for the ecs"
   value = aws_security_group.app-ecs
 }
 
-output "sg_id_for_app_alb" {
+output "sg_id_for_alb" {
   description = "The ID of the sg for the alb"
   value = aws_security_group.app-alb
 }

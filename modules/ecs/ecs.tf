@@ -75,12 +75,12 @@ resource "aws_ecs_service" "main" {
     # タスクの起動を許可するサブネット
     subnets = [var.public-a_id, var.public-a_id]
     # タスクに紐付けるセキュリティグループ
-    security_groups = [var.sg_id_for_app_ecs]
+    security_groups = [var.sg_id_for_ecs]
   }
 
   # ECSタスクの起動後に紐付けるELBターゲットグループ
   load_balancer {
-    target_group_arn = var.sg_id_for_app_ecs
+    target_group_arn = var.sg_id_for_ecs
     container_name   = var.name_of_container
     container_port   = var.app-to-port
   }
