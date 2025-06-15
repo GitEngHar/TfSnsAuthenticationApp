@@ -1,4 +1,4 @@
-output "dns_name_of_alb" {
+output "dns_name" {
   description = "The ID of the vpn"
   value = aws_lb.ecs-app-lb.dns_name
 }

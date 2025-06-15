@@ -4,8 +4,10 @@ variable "image_family_name" {
 }
 
 variable "container_environment" {
-  description = "The dns name of the environment"
-  type = string
+  type = list(object({
+    name  = string
+    value = string
+  }))
 }
 
 variable "arn_ecs_app_listener" {
@@ -45,5 +47,10 @@ variable "aws_account_id" {
 
 variable "sg_id_for_ecs" {
   description = "The sg for the ecs"
+  type        = string
+}
+
+variable "container_image_name" {
+  description = "The image name and version"
   type        = string
 }
