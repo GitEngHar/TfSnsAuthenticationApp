@@ -1,15 +1,14 @@
 resource "aws_ecs_cluster" "main" {
-  name = "SnsAuthAppCluster"
+  name = var.name_of_cluster
 }
 
 resource "aws_ecs_task_definition" "main" {
-  family                   = "SnsAuthenticationAppTaskDef"
+  family                   = var.image_family_name
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
   network_mode             = "awsvpc"
   execution_role_arn       = "arn:aws:iam::${var.aws_account_id}:role/ecsTaskExecutionRole"
-  depends_on = [aws_lb.test]
   container_definitions    = <<EOL
 [
   {
@@ -17,19 +16,12 @@ resource "aws_ecs_task_definition" "main" {
     "image": "${var.aws_account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/sbs-authentication-app:latest",
     "portMappings": [
       {
-        "containerPort": 8080,
-        "hostPort": 8080
+        "containerPort": ${var.app-to-port},
+        "hostPort": ${var.app-to-port}
       }
     ],
     "environment":[
-      {
-        "name": "REDIRECT_URI",
-        "value": "http://${aws_lb.test.dns_name}:8080/callback"
-      },
-      {
-        "name": "CLIENT_ID",
-        "value": "${var.line_auth_client_id}"
-      }
+      ${var.container_environment}
     ]
   }
 ]
@@ -39,12 +31,12 @@ EOL
 # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
 resource "aws_lb_listener_rule" "main" {
   # ルールを追加するリスナー
-  listener_arn = aws_lb_listener.test_listener.arn
+  listener_arn = var.arn_ecs_app_listener
 
   # 受け取ったトラフィックをターゲットグループへ受け渡す
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.ip-example.arn
+    target_group_arn = var.arn_ecs_app_listener
   }
 
   # ターゲットグループへ受け渡すトラフィックの条件
@@ -58,7 +50,7 @@ resource "aws_lb_listener_rule" "main" {
 
 # https://www.terraform.io/docs/providers/aws/r/ecs_service.html
 resource "aws_ecs_service" "main" {
-  name = "SnsAuthAppSvc"
+  name = var.name_of_service
 
   # 依存関係の記述。
   # "aws_lb_listener_rule.main" リソースの作成が完了するのを待ってから当該リソースの作成を開始する。
@@ -81,16 +73,16 @@ resource "aws_ecs_service" "main" {
   network_configuration {
     assign_public_ip = true
     # タスクの起動を許可するサブネット
-    subnets = [aws_subnet.public.id, aws_subnet.public-c.id]
+    subnets = [var.public-a_id, var.public-a_id]
     # タスクに紐付けるセキュリティグループ
-    security_groups = [aws_security_group.sns-authentication-app-ecs.id]
+    security_groups = [var.sg_id_for_app_ecs]
   }
 
   # ECSタスクの起動後に紐付けるELBターゲットグループ
   load_balancer {
-    target_group_arn = aws_lb_target_group.ip-example.arn
-    container_name   = "springapp"
-    container_port   = "8080"
+    target_group_arn = var.sg_id_for_app_ecs
+    container_name   = var.name_of_container
+    container_port   = var.app-to-port
   }
 
 }
