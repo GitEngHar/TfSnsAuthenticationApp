@@ -9,23 +9,19 @@ resource "aws_ecs_task_definition" "main" {
   memory                   = "512"
   network_mode             = "awsvpc"
   execution_role_arn       = "arn:aws:iam::${var.aws_account_id}:role/ecsTaskExecutionRole"
-  container_definitions    = <<EOL
-[
-  {
-    "name": "springapp",
-    "image": "${var.aws_account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/sbs-authentication-app:latest",
-    "portMappings": [
-      {
-        "containerPort": ${var.app-to-port},
-        "hostPort": ${var.app-to-port}
-      }
-    ],
-    "environment":[
-      ${var.container_environment}
-    ]
-  }
-]
-EOL
+  container_definitions    = jsonencode([
+    {
+      name  = "springapp"
+      image = "${var.aws_account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/${var.container_image_name}"
+      portMappings = [
+        {
+          containerPort = var.app-to-port
+          hostPort      = var.app-to-port
+        }
+      ]
+      environment = var.container_environment
+    }
+  ])
 }
 
 # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
