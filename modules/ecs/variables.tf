@@ -1,4 +1,4 @@
-variable "image_family_name" {
+variable "task_def_family_name" {
   description = "The family name of the ecs image"
   type        = string
 }
