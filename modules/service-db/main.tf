@@ -15,7 +15,7 @@ resource "aws_ecs_task_definition" "mysql" {
 }
 
 resource "aws_service_discovery_private_dns_namespace" "app-db" {
-  name        = "example.local"
+  name        = var.host_name_for_db
   vpc         = var.vpc_id
   description = "Private DNS namespace for ECS service discovery"
 }

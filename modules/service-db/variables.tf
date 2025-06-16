@@ -14,6 +14,11 @@ variable "id-private" {
   type = string
 }
 
+variable "host_name_for_db" {
+  description = "The host name for the db "
+  type = string
+}
+
 variable "sg_id_for_connect_to_mysql" {
   description = "The Port to relate App for the sg "
   type = string
