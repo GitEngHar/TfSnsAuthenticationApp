@@ -19,6 +19,11 @@ variable "sg_id_for_connect_to_mysql" {
   type = number
 }
 
+variable "name_of_container_image" {
+  description = "The name of the container img"
+  type = string
+}
+
 variable "container_environment" {
   type = list(object({
     name  = string

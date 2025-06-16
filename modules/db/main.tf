@@ -7,7 +7,7 @@ resource "aws_ecs_task_definition" "mysql" {
 
   container_definitions = jsonencode([{
     name      = "mysql"
-    image     = "mysql:8"
+    image     = var.name_of_container_image
     essential = true
     environment = var.container_environment
     portMappings = [{ containerPort = 3306 }]
