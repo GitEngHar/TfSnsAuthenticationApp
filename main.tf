@@ -51,12 +51,17 @@ module "alb" {
   public-c_id   = module.network.public-c_id
 }
 
+module "cluster" {
+  source          = "./modules/cluster"
+  name_of_cluster = "SnsAuthAppCluster"
+}
+
 module "ecs" {
-  source                = "./modules/ecs"
+  source                = "./modules/service-app"
   task_def_family_name  = "SnsAuthenticationAppTaskDef"
   container_environment = local.container_environment
   arn_ecs_app_listener  = module.alb.arn_ecs_app_listener
-  name_of_cluster       = "SnsAuthAppCluster"
+  id_of_ecs_cluster     = module.cluster.cluster_id
   name_of_service       = "SnsAuthAppSvc"
   name_of_container     = "springapp"
   public-a_id           = module.network.public-a_id

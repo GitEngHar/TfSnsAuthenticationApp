@@ -1,7 +1,3 @@
-resource "aws_ecs_cluster" "main" {
-  name = var.name_of_cluster
-}
-
 resource "aws_ecs_task_definition" "main" {
   family                   = var.task_def_family_name
   requires_compatibilities = ["FARGATE"]
@@ -54,7 +50,7 @@ resource "aws_ecs_service" "main" {
   depends_on = [aws_lb_listener_rule.main]
 
   # 当該ECSサービスを配置するECSクラスターの指定
-  cluster = aws_ecs_cluster.main.name
+  cluster = var.id_of_ecs_cluster
 
   # データプレーンとしてFargateを使用する
   launch_type = "FARGATE"

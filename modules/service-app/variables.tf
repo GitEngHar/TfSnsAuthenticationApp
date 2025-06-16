@@ -15,7 +15,7 @@ variable "arn_ecs_app_listener" {
   type = string
 }
 
-variable "name_of_cluster" {
+variable "id_of_ecs_cluster" {
   description = "The name of the cluster"
   type = string
 }
