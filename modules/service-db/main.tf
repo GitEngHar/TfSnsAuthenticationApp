@@ -18,14 +18,6 @@ resource "aws_ecs_task_definition" "mysql" {
       containerPort = 3306,
       name          = "mysql"  # Service Connect用に必須
     }]
-    logConfiguration = {
-      logDriver = "awslogs",
-      options = {
-        awslogs-group         = "/ecs/mysql"
-        awslogs-region        = "ap-northeast-1"
-        awslogs-stream-prefix = "ecs"
-      }
-    }
   }])
 }
 
