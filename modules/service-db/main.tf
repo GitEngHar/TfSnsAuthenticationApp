@@ -1,3 +1,6 @@
+# -------------------------
+# ECS タスク定義 (MySQL)
+# -------------------------
 resource "aws_ecs_task_definition" "mysql" {
   family                   = var.task_def_family_name
   requires_compatibilities = ["FARGATE"]
@@ -13,33 +16,22 @@ resource "aws_ecs_task_definition" "mysql" {
     environment = var.container_environment
     portMappings = [{
       containerPort = 3306,
-      name          = "mysql" # Service Connect の port_name に必要
+      name          = "mysql"  # Service Connect用に必須
     }]
+    logConfiguration = {
+      logDriver = "awslogs",
+      options = {
+        awslogs-group         = "/ecs/mysql"
+        awslogs-region        = "ap-northeast-1"
+        awslogs-stream-prefix = "ecs"
+      }
+    }
   }])
 }
 
-resource "aws_service_discovery_private_dns_namespace" "app-db" {
-  name        = var.host_name_for_db
-  vpc         = var.vpc_id
-  description = "Private DNS namespace for ECS service discovery"
-}
-
-resource "aws_service_discovery_service" "mysql" {
-  name = "mysql"
-  dns_config {
-    namespace_id = aws_service_discovery_private_dns_namespace.app-db.id
-    dns_records {
-      type = "A"
-      ttl  = 10
-    }
-    routing_policy = "MULTIVALUE"
-  }
-
-  health_check_custom_config {
-    failure_threshold = 1
-  }
-}
-
+# -------------------------
+# ECS サービス (MySQL)
+# -------------------------
 resource "aws_ecs_service" "db_service" {
   name            = "db-service"
   cluster         = var.id-ecs-cluster
@@ -48,25 +40,22 @@ resource "aws_ecs_service" "db_service" {
   desired_count   = 1
 
   network_configuration {
-    subnets         = [var.id-private]
-    security_groups = [var.sg_id_for_connect_to_mysql]
-    assign_public_ip = true
-  }
-
-  service_registries {
-    registry_arn = aws_service_discovery_service.mysql.arn
+    subnets          = [var.id-private]
+    security_groups  = [var.sg_id_for_connect_to_mysql]
+    assign_public_ip = false  # Service Connectではfalseが推奨
   }
 
   service_connect_configuration {
-    enabled = true
-    namespace = "local"
+    enabled   = true
+    namespace = var.dns_service_connect
 
     service {
-      port_name = "mysql" # task 定義と一致
+      port_name = "mysql"  # タスク定義の portMappings.name と一致させる
       client_alias {
         port     = 3306
         dns_name = "mysql"
       }
     }
   }
+
 }
