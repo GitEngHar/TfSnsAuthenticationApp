@@ -7,7 +7,7 @@ resource "aws_ecs_task_definition" "main" {
   execution_role_arn       = "arn:aws:iam::${var.aws_account_id}:role/ecsTaskExecutionRole"
   container_definitions    = jsonencode([
     {
-      name  = "springapp"
+      name  = var.name_of_container
       image = "${var.aws_account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/${var.container_image_name}"
       portMappings = [
         {
