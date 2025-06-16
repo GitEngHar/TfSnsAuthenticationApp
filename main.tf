@@ -53,12 +53,12 @@ module "alb" {
 
 module "ecs" {
   source                = "./modules/ecs"
-  image_family_name     = "SnsAuthenticationAppTaskDef"
+  task_def_family_name  = "SnsAuthenticationAppTaskDef"
   container_environment = local.container_environment
   arn_ecs_app_listener  = module.alb.arn_ecs_app_listener
+  name_of_cluster       = "SnsAuthAppCluster"
   name_of_service       = "SnsAuthAppSvc"
   name_of_container     = "springapp"
-  name_of_cluster       = "SnsAuthAppCluster"
   public-a_id           = module.network.public-a_id
   app-to-port           = "8080"
   aws_account_id        = var.aws_account_id

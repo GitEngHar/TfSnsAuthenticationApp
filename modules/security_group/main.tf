@@ -25,6 +25,18 @@ resource "aws_vpc_security_group_ingress_rule" "allow-myip-ipv4" {
   to_port     = var.app-to-port
 }
 
+resource "aws_security_group" "mysql_sg" {
+  name = "mysql-sg"
+  vpc_id = var.vpc_id
+
+  ingress {
+    from_port = 3306
+    to_port = 3306
+    protocol    = "tcp"
+    security_groups = [aws_security_group.app-ecs.id]
+  }
+}
+
 resource "aws_vpc_security_group_ingress_rule" "allow-alb-ipv4" {
   security_group_id            = aws_security_group.app-ecs.id
   referenced_security_group_id = aws_security_group.app-alb.id

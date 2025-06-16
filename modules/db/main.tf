@@ -1,0 +1,54 @@
+resource "aws_ecs_task_definition" "mysql" {
+  family                   = "mysql"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "256"
+  memory                   = "512"
+
+  container_definitions = jsonencode([{
+    name      = "mysql"
+    image     = "mysql:8"
+    essential = true
+    environment = var.container_environment
+    portMappings = [{ containerPort = 3306 }]
+  }])
+}
+
+resource "aws_service_discovery_private_dns_namespace" "app-db" {
+  name        = "example.local"
+  vpc         = var.vpc_id
+  description = "Private DNS namespace for ECS service discovery"
+}
+
+
+resource "aws_service_discovery_service" "mysql" {
+  name = "mysql"
+  dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.app-db.id
+    dns_records {
+      type = "A"
+      ttl  = 10
+    }
+    routing_policy = "MULTIVALUE"
+  }
+
+  health_check_custom_config {
+    failure_threshold = 1
+  }
+}
+
+resource "aws_ecs_service" "db_service" {
+  name            = "db-service"
+  cluster         = var.id-ecs-cluster
+  task_definition = aws_ecs_task_definition.mysql.arn
+  launch_type     = "FARGATE"
+  network_configuration {
+    subnets         = var.id-private
+    security_groups = [var.sg_id_for_connect_to_mysql]
+    assign_public_ip = false
+  }
+
+  service_registries {
+    registry_arn = aws_service_discovery_service.mysql.arn
+  }
+}

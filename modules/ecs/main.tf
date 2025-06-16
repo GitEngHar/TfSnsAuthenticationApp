@@ -3,7 +3,7 @@ resource "aws_ecs_cluster" "main" {
 }
 
 resource "aws_ecs_task_definition" "main" {
-  family                   = var.image_family_name
+  family                   = var.task_def_family_name
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
