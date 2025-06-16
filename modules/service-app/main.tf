@@ -15,6 +15,14 @@ resource "aws_ecs_task_definition" "main" {
           hostPort      = var.app-to-port
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = var.ecs_log_group_name
+          awslogs-region        = "ap-northeast-1"
+          awslogs-stream-prefix = "my-app"
+        }
+      }
       environment = var.container_environment
     }
   ])

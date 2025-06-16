@@ -3,6 +3,11 @@ variable "task_def_family_name" {
   type        = string
 }
 
+variable "ecs_log_group_name" {
+  description = "The log group for the ecs"
+  type = string
+}
+
 variable "container_environment" {
   type = list(object({
     name  = string
@@ -14,7 +19,6 @@ variable "arn_ecs_app_listener" {
   description = "The arn of the ecs listener"
   type = string
 }
-
 
 
 variable "arn_lb_target_group" {
