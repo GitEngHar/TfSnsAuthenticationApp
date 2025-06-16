@@ -11,7 +11,7 @@ variable "id-ecs-cluster" {
 
 variable "id-private" {
   description = "The Port to relate App for the sg "
-  type = number
+  type = string
 }
 
 variable "sg_id_for_connect_to_mysql" {
