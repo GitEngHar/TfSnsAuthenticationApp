@@ -15,6 +15,11 @@ variable "arn_ecs_app_listener" {
   type = string
 }
 
+variable "name_of_cluster" {
+  description = "The name of the cluster"
+  type = string
+}
+
 variable "name_of_service" {
   description = "The name of the service"
   type = string
@@ -22,11 +27,6 @@ variable "name_of_service" {
 
 variable "name_of_container" {
   description = "The name of the container"
-  type = string
-}
-
-variable "name_of_cluster" {
-  description = "The name of the cluster"
   type = string
 }
 
