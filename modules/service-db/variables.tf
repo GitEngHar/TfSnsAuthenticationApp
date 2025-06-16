@@ -16,7 +16,7 @@ variable "id-private" {
 
 variable "sg_id_for_connect_to_mysql" {
   description = "The Port to relate App for the sg "
-  type = number
+  type = string
 }
 
 variable "name_of_container_image" {
