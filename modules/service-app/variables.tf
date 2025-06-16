@@ -15,6 +15,13 @@ variable "arn_ecs_app_listener" {
   type = string
 }
 
+
+
+variable "arn_lb_target_group" {
+  description = "The arn of the ecs target group"
+  type = string
+}
+
 variable "id_of_ecs_cluster" {
   description = "The name of the cluster"
   type = string

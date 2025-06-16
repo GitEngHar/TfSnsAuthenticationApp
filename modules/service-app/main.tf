@@ -28,7 +28,7 @@ resource "aws_lb_listener_rule" "main" {
   # 受け取ったトラフィックをターゲットグループへ受け渡す
   action {
     type             = "forward"
-    target_group_arn = var.arn_ecs_app_listener
+    target_group_arn = var.arn_lb_target_group
   }
 
   # ターゲットグループへ受け渡すトラフィックの条件
