@@ -43,7 +43,7 @@ resource "aws_ecs_service" "db_service" {
   task_definition = aws_ecs_task_definition.mysql.arn
   launch_type     = "FARGATE"
   network_configuration {
-    subnets         = var.id-private
+    subnets         = [var.id-private]
     security_groups = [var.sg_id_for_connect_to_mysql]
     assign_public_ip = false
   }
