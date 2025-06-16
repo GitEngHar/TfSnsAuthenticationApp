@@ -42,6 +42,7 @@ resource "aws_ecs_service" "db_service" {
   cluster         = var.id-ecs-cluster
   task_definition = aws_ecs_task_definition.mysql.arn
   launch_type     = "FARGATE"
+  desired_count = "1"
   network_configuration {
     subnets         = [var.id-private]
     security_groups = [var.sg_id_for_connect_to_mysql]
