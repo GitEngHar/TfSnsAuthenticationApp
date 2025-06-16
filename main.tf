@@ -69,6 +69,7 @@ module "ecs" {
   aws_account_id        = var.aws_account_id
   sg_id_for_ecs         = module.security_group.sg_id_for_ecs
   container_image_name  = "sbs-authentication-app:latest"
+  arn_lb_target_group   = ""
 }
 
 
