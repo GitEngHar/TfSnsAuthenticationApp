@@ -42,7 +42,7 @@ resource "aws_ecs_service" "db_service" {
   network_configuration {
     subnets          = [var.id-private]
     security_groups  = [var.sg_id_for_connect_to_mysql]
-    assign_public_ip = false  # Service Connectではfalseが推奨
+    assign_public_ip = true  # Service Connectではfalseが推奨
   }
 
   service_connect_configuration {
