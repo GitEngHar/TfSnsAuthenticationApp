@@ -35,3 +35,13 @@ variable "container_environment" {
     value = string
   }))
 }
+
+variable "task_def_family_name" {
+  description = "The family name of the ecs image"
+  type        = string
+}
+
+variable "aws_account_id" {
+  description = "The name of the container img"
+  type = string
+}

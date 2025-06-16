@@ -1,10 +1,10 @@
 resource "aws_ecs_task_definition" "mysql" {
-  family                   = "mysql"
+  family                   = var.task_def_family_name
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = "256"
   memory                   = "512"
-
+  execution_role_arn       = "arn:aws:iam::${var.aws_account_id}:role/ecsTaskExecutionRole"
   container_definitions = jsonencode([{
     name      = "mysql"
     image     = var.name_of_container_image
