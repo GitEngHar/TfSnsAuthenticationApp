@@ -65,8 +65,3 @@ variable "container_image_name" {
   description = "The image name and version"
   type        = string
 }
-
-variable "dns_service_connect" {
-  description = ""
-  type = string
-}
