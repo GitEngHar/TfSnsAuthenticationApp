@@ -56,6 +56,6 @@ resource "aws_ecs_service" "db_service" {
   }
 
   service_registries {
-    registry_arn = var.arn_of_service_discovery
+    registry_arn = aws_service_discovery_service.mysql.arn
   }
 }
