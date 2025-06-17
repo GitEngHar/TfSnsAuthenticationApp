@@ -40,7 +40,3 @@ variable "aws_account_id" {
 variable "id_of_service_discovery" {
   type = string
 }
-
-variable "arn_of_service_discovery" {
-  type = string
-}
