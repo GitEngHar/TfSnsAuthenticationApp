@@ -3,7 +3,12 @@ output "cluster_id" {
   value = aws_ecs_cluster.main.id
 }
 
-output "dns_service_connect" {
+output "id_of_service_discovery" {
   description = ""
-  value = aws_service_discovery_private_dns_namespace.service_connect.name
+  value = aws_service_discovery_private_dns_namespace.service_connect.id
+}
+
+output "arn_of_service_discovery" {
+  description = ""
+  value = aws_service_discovery_private_dns_namespace.service_connect.arn
 }

@@ -37,7 +37,10 @@ variable "aws_account_id" {
   type = string
 }
 
-variable "dns_service_connect" {
-  description = "The name of the cluster"
+variable "id_of_service_discovery" {
+  type = string
+}
+
+variable "arn_of_service_discovery" {
   type = string
 }

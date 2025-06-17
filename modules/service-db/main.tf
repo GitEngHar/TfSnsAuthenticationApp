@@ -15,12 +15,28 @@ resource "aws_ecs_task_definition" "mysql" {
     essential = true
     environment = var.container_environment
     portMappings = [{
-      name          = "mysql",
-      containerPort = 3306,
-      protocol = "tcp",
-      appProtocol = "tcp",
+      containerPort = 3306
     }]
   }])
+}
+
+resource "aws_service_discovery_service" "mysql" {
+  name = "mysql"
+
+  dns_config {
+    namespace_id = var.id_of_service_discovery
+
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
+
+  health_check_custom_config {
+    failure_threshold = 1
+  }
 }
 
 # -------------------------
@@ -39,17 +55,7 @@ resource "aws_ecs_service" "db_service" {
     assign_public_ip = true  # Service Connectではfalseが推奨
   }
 
-  service_connect_configuration {
-    enabled   = true
-    namespace = var.dns_service_connect
-
-    service {
-      port_name = "mysql"
-      client_alias {
-        port     = 3306
-        dns_name = "mysql"
-      }
-    }
+  service_registries {
+    registry_arn = var.arn_of_service_discovery
   }
-
 }

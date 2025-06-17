@@ -5,11 +5,8 @@ resource "aws_ecs_cluster" "main" {
   }
 }
 
-# -------------------------
-# Service Connect 用の Cloud Map 名前空間
-# -------------------------
 resource "aws_service_discovery_private_dns_namespace" "service_connect" {
-  name        = "pointservice.internal"
+  name        = var.name_of_discovery_namespace
   vpc         = var.vpc_id
   description = "Namespace for Service Connect"
 }
