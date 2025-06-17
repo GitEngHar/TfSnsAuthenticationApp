@@ -11,8 +11,10 @@ resource "aws_ecs_task_definition" "main" {
       image = "${var.aws_account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/${var.container_image_name}"
       portMappings = [
         {
-          containerPort = var.app-to-port
-          hostPort      = var.app-to-port
+          name          = var.name_of_container,
+          containerPort = var.app-to-port,
+          protocol = "tcp",
+          appProtocol = "tcp",
         }
       ]
       logConfiguration = {
@@ -81,6 +83,14 @@ resource "aws_ecs_service" "main" {
   service_connect_configuration {
     enabled   = true
     namespace = var.dns_service_connect
+
+    service {
+      port_name = var.name_of_container
+      client_alias {
+        port     = var.app-to-port
+        dns_name = var.name_of_container
+      }
+    }
   }
 
   # ECSタスクの起動後に紐付けるELBターゲットグループ

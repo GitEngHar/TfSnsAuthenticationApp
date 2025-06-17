@@ -15,8 +15,10 @@ resource "aws_ecs_task_definition" "mysql" {
     essential = true
     environment = var.container_environment
     portMappings = [{
+      name          = "mysql",
       containerPort = 3306,
-      name          = "mysql"  # Service Connect用に必須
+      protocol = "tcp",
+      appProtocol = "tcp",
     }]
   }])
 }
@@ -30,6 +32,7 @@ resource "aws_ecs_service" "db_service" {
   task_definition = aws_ecs_task_definition.mysql.arn
   launch_type     = "FARGATE"
   desired_count   = 1
+  enable_execute_command = true
 
   network_configuration {
     subnets          = [var.id-private]
@@ -42,7 +45,7 @@ resource "aws_ecs_service" "db_service" {
     namespace = var.dns_service_connect
 
     service {
-      port_name = "mysql"  # タスク定義の portMappings.name と一致させる
+      port_name = "mysql"
       client_alias {
         port     = 3306
         dns_name = "mysql"
