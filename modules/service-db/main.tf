@@ -32,7 +32,6 @@ resource "aws_ecs_service" "db_service" {
   task_definition = aws_ecs_task_definition.mysql.arn
   launch_type     = "FARGATE"
   desired_count   = 1
-  enable_execute_command = true
 
   network_configuration {
     subnets          = [var.id-private]
