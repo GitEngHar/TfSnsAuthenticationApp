@@ -78,6 +78,11 @@ resource "aws_ecs_service" "main" {
     security_groups = [var.sg_id_for_ecs]
   }
 
+  service_connect_configuration {
+    enabled   = true
+    namespace = var.dns_service_connect
+  }
+
   # ECSタスクの起動後に紐付けるELBターゲットグループ
   load_balancer {
     target_group_arn = var.arn_lb_target_group
