@@ -1,22 +1,18 @@
 
-variable "id-ecs-cluster" {
-  description = "The Port to relate App for the sg "
+variable "ecs_cluster_id" {
   type = string
 }
 
-variable "id-private" {
-  description = "The Port to relate App for the sg "
+variable "private_subnet_id" {
   type = string
 }
 
 
-variable "sg_id_for_connect_to_mysql" {
-  description = "The Port to relate App for the sg "
+variable "mysql_access_security_group_id" {
   type = string
 }
 
-variable "name_of_container_image" {
-  description = "The name of the container img"
+variable "container_image" {
   type = string
 }
 
@@ -27,16 +23,14 @@ variable "container_environment" {
   }))
 }
 
-variable "task_def_family_name" {
-  description = "The family name of the ecs image"
+variable "task_definition_family" {
   type        = string
 }
 
 variable "aws_account_id" {
-  description = "The name of the container img"
   type = string
 }
 
-variable "id_of_service_discovery" {
+variable "service_discovery_id" {
   type = string
 }

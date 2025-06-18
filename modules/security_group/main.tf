@@ -20,9 +20,9 @@ resource "aws_security_group" "app-alb" {
 resource "aws_vpc_security_group_ingress_rule" "allow-myip-ipv4" {
   security_group_id = aws_security_group.app-alb.id
   cidr_ipv4   = "0.0.0.0/0"
-  from_port   = var.app-from-port
+  from_port   = var.app_ingress_to_port
   ip_protocol = "tcp"
-  to_port     = var.app-to-port
+  to_port     = var.app_ingress_to_port
 }
 
 resource "aws_security_group" "mysql_sg" {
@@ -40,9 +40,9 @@ resource "aws_security_group" "mysql_sg" {
 resource "aws_vpc_security_group_ingress_rule" "allow-alb-ipv4" {
   security_group_id            = aws_security_group.app-ecs.id
   referenced_security_group_id = aws_security_group.app-alb.id
-  from_port                    = var.app-from-port
+  from_port                    = var.app_ingress_to_port
   ip_protocol                  = "tcp"
-  to_port                      = var.app-to-port
+  to_port                      = var.app_ingress_to_port
 }
 
 
