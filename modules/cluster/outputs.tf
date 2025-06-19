@@ -1,9 +1,8 @@
-output "cluster_id" {
-  description = "The ID of the ecs cluster"
+output "ecs_cluster_id" {
   value = aws_ecs_cluster.main.id
 }
 
-output "id_of_service_discovery" {
+output "ecs_service_discovery_id" {
   description = ""
   value = aws_service_discovery_private_dns_namespace.service_connect.id
 }

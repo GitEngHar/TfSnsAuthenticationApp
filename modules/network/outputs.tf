@@ -3,17 +3,17 @@ output "vpc_id" {
   value = aws_vpc.main.id
 }
 
-output "public-a_id" {
+output "public_a_id" {
   description = "The ID to use for the subnet"
   value = aws_subnet.public-a.id
 }
 
-output "public-c_id" {
+output "public_c_id" {
   description = "The ID to use for the subnet"
   value = aws_subnet.public-c.id
 }
 
-output "private-a_id" {
+output "private_a_id" {
   description = "The ID to use for the subnet"
   value = aws_subnet.private-a.id
 }
