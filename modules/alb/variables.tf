@@ -1,30 +1,25 @@
-variable "sg_id_for_alb" {
-  description = "The ID of the sg for the ecs"
+variable "alb_access_security_group_id" {
   type = string
 }
 
 variable "vpc_id" {
-  description = "The ID to relate VPC for the sg"
   type = string
 }
 
-variable "app-to-port" {
+variable "app_ingress_to_port" {
+  type = number
+}
+
+variable "app_ingress_from_port" {
   description = "The Port to relate App for the sg "
   type = number
 }
 
-variable "app-from-port" {
-  description = "The Port to relate App for the sg "
-  type = number
-}
-
-variable "public-a_id" {
-  description = "The ID to relate VPC for the sg"
+variable "public_a_subnet_id" {
   type = string
 }
 
-variable "public-c_id" {
-  description = "The ID to relate VPC for the sg"
+variable "public_c_subnet_id" {
   type = string
 }
 

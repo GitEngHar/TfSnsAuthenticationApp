@@ -2,7 +2,7 @@
 # ECS タスク定義 (MySQL)
 # -------------------------
 resource "aws_ecs_task_definition" "mysql" {
-  family                   = var.task_def_family_name
+  family                   = var.task_definition_family
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = "256"
@@ -11,7 +11,7 @@ resource "aws_ecs_task_definition" "mysql" {
 
   container_definitions = jsonencode([{
     name      = "mysql"
-    image     = var.name_of_container_image
+    image     = var.container_image
     essential = true
     environment = var.container_environment
     portMappings = [{
@@ -24,7 +24,7 @@ resource "aws_service_discovery_service" "mysql" {
   name = "mysql"
 
   dns_config {
-    namespace_id = var.id_of_service_discovery
+    namespace_id = var.service_discovery_id
 
     dns_records {
       ttl  = 10
@@ -44,14 +44,14 @@ resource "aws_service_discovery_service" "mysql" {
 # -------------------------
 resource "aws_ecs_service" "db_service" {
   name            = "db-service"
-  cluster         = var.id-ecs-cluster
+  cluster         = var.ecs_cluster_id
   task_definition = aws_ecs_task_definition.mysql.arn
   launch_type     = "FARGATE"
   desired_count   = 1
 
   network_configuration {
-    subnets          = [var.id-private]
-    security_groups  = [var.sg_id_for_connect_to_mysql]
+    subnets          = [var.private_subnet_id]
+    security_groups  = [var.mysql_access_security_group_id]
     assign_public_ip = true  # Service Connectではfalseが推奨
   }
 

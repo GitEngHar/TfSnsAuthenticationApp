@@ -1,10 +1,8 @@
-variable "task_def_family_name" {
-  description = "The family name of the ecs image"
+variable "task_definition_family" {
   type        = string
 }
 
-variable "ecs_log_group_name" {
-  description = "The log group for the ecs"
+variable "ecs_service_log_group_name" {
   type = string
 }
 
@@ -15,53 +13,43 @@ variable "container_environment" {
   }))
 }
 
-variable "arn_ecs_app_listener" {
-  description = "The arn of the ecs listener"
+variable "ecs_service_listener" {
   type = string
 }
 
 
-variable "arn_lb_target_group" {
-  description = "The arn of the ecs target group"
+variable "lb_target_group_arn" {
   type = string
 }
 
-variable "id_of_ecs_cluster" {
-  description = "The name of the cluster"
+variable "ecs_cluster_id" {
   type = string
 }
 
-variable "name_of_service" {
-  description = "The name of the service"
+variable "ecs_service_name" {
   type = string
 }
 
-variable "name_of_container" {
-  description = "The name of the container"
+variable "container_name" {
   type = string
 }
 
-variable "public-a_id" {
-  description = "The ID to relate VPC for the sg"
+variable "public_a_subnet_id" {
   type = string
 }
 
-variable "app-to-port" {
-  description = "The Port to relate App for the sg "
+variable "container_port" {
   type = number
 }
 
 variable "aws_account_id" {
-  description = "AWS Account ID"
   type        = string
 }
 
-variable "sg_id_for_ecs" {
-  description = "The sg for the ecs"
+variable "app_access_security_group_id" {
   type        = string
 }
 
-variable "container_image_name" {
-  description = "The image name and version"
+variable "container_image" {
   type        = string
 }
