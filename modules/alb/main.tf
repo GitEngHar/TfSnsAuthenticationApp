@@ -1,4 +1,4 @@
-resource "aws_lb" "ecs-app-lb" {
+resource "aws_lb" "ecs_alb" {
   name                       = "test-lb-tf"
   internal                   = false
   load_balancer_type         = "application"
@@ -10,7 +10,7 @@ resource "aws_lb" "ecs-app-lb" {
   }
 }
 
-resource "aws_lb_target_group" "ecs-app-target-group" {
+resource "aws_lb_target_group" "ecs_app_tg" {
   name        = "tf-example-lb-tg"
   port        = var.app_ingress_from_port
   protocol    = "HTTP"
@@ -18,12 +18,12 @@ resource "aws_lb_target_group" "ecs-app-target-group" {
   vpc_id      = var.vpc_id
 }
 
-resource "aws_lb_listener" "ecs-app-lb-listener" {
-  load_balancer_arn = aws_lb.ecs-app-lb.id
+resource "aws_lb_listener" "ecs_app_alb_http_listener" {
+  load_balancer_arn = aws_lb.ecs_alb.id
   port              = var.app_ingress_to_port
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.ecs-app-target-group.id
+    target_group_arn = aws_lb_target_group.ecs_app_tg.id
   }
 }

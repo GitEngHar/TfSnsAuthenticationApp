@@ -4,20 +4,17 @@ variable "vpc_cider_block" {
   default = "10.0.0.0/16"
 }
 
-variable "public-a_cider_block" {
-  description = "Public subnet cider block of public-a"
+variable "public_a_cider_block" {
   type = string
   default = "10.0.1.0/24"
 }
 
-variable "public-c_cider_block" {
-  description = "Public subnet cider block of public-c"
+variable "public_c_cider_block" {
   type = string
   default = "10.0.2.0/24"
 }
 
-variable "private-a_cider_block" {
-  description = "Private subnet cider block of private-a"
+variable "private_a_cider_block" {
   type = string
   default = "10.0.128.0/24"
 }

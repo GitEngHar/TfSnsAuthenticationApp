@@ -1,13 +1,12 @@
 output "dns_name" {
-  value = aws_lb.ecs-app-lb.dns_name
-}
-
-output "alb_ecs_service_listener_arn" {
-  description = "The ARN of the listener"
-  value = aws_lb_listener.ecs-app-lb-listener.arn
+  value = aws_lb.ecs_alb.dns_name
 }
 
 output "alb_ecs_service_target_group_id" {
-  description = "The ARN of the target group"
-  value = aws_lb_target_group.ecs-app-target-group.arn
+  value = aws_lb_target_group.ecs_app_tg.arn
 }
+
+output "alb_ecs_service_listener_arn" {
+  value = aws_lb_listener.ecs_app_alb_http_listener.arn
+}
+
