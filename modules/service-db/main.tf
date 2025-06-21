@@ -1,7 +1,7 @@
 # -------------------------
 # ECS タスク定義 (MySQL)
 # -------------------------
-resource "aws_ecs_task_definition" "mysql" {
+resource "aws_ecs_task_definition" "mysql_task_def" {
   family                   = var.task_definition_family
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -20,7 +20,7 @@ resource "aws_ecs_task_definition" "mysql" {
   }])
 }
 
-resource "aws_service_discovery_service" "mysql" {
+resource "aws_service_discovery_service" "mysql_service_discovery" {
   name = "mysql"
 
   dns_config {
@@ -45,7 +45,7 @@ resource "aws_service_discovery_service" "mysql" {
 resource "aws_ecs_service" "db_service" {
   name            = "db-service"
   cluster         = var.ecs_cluster_id
-  task_definition = aws_ecs_task_definition.mysql.arn
+  task_definition = aws_ecs_task_definition.mysql_task_def.arn
   launch_type     = "FARGATE"
   desired_count   = 1
 
@@ -56,6 +56,6 @@ resource "aws_ecs_service" "db_service" {
   }
 
   service_registries {
-    registry_arn = aws_service_discovery_service.mysql.arn
+    registry_arn = aws_service_discovery_service.mysql_service_discovery.arn
   }
 }

@@ -1,4 +1,4 @@
-resource "aws_ecs_task_definition" "main" {
+resource "aws_ecs_task_definition" "app_task_def" {
   family                   = var.task_definition_family
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -28,7 +28,7 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
-resource "aws_lb_listener_rule" "main" {
+resource "aws_lb_listener_rule" "app_service_listener_rule" {
   # ルールを追加するリスナー
   listener_arn = var.ecs_service_listener
 
@@ -48,13 +48,13 @@ resource "aws_lb_listener_rule" "main" {
 
 
 # https://www.terraform.io/docs/providers/aws/r/ecs_service.html
-resource "aws_ecs_service" "main" {
+resource "aws_ecs_service" "app_service" {
   name = var.ecs_service_name
 
   # 依存関係の記述。
   # "aws_lb_listener_rule.main" リソースの作成が完了するのを待ってから当該リソースの作成を開始する。
   # "depends_on" は "aws_ecs_service" リソース専用のプロパティではなく、Terraformのシンタックスのため他の"resource"でも使用可能
-  depends_on = [aws_lb_listener_rule.main]
+  depends_on = [aws_lb_listener_rule.app_service_listener_rule]
 
   # 当該ECSサービスを配置するECSクラスターの指定
   cluster = var.ecs_cluster_id
@@ -66,7 +66,7 @@ resource "aws_ecs_service" "main" {
   desired_count = "1"
 
   # 起動するECSタスクのタスク定義
-  task_definition = aws_ecs_task_definition.main.arn
+  task_definition = aws_ecs_task_definition.app_task_def.arn
 
   # ECSタスクへ設定するネットワークの設定
   network_configuration {
