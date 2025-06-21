@@ -1,14 +1,11 @@
-output "sg_id_for_ecs" {
-  description = "The ID of the sg for the ecs"
+output "ecs_service_access_security_group_id" {
   value = aws_security_group.app-ecs.id
 }
 
-output "sg_id_for_alb" {
-  description = "The ID of the sg for the alb"
+output "alb_access_security_group_id" {
   value = aws_security_group.app-alb.id
 }
 
-output "sg_id_for_connect_to_mysql" {
-  description = "The ID of the sg for the db"
+output "mysql_access_security_group_id" {
   value = aws_security_group.mysql_sg.id
 }

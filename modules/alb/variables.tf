@@ -11,7 +11,6 @@ variable "app_ingress_to_port" {
 }
 
 variable "app_ingress_from_port" {
-  description = "The Port to relate App for the sg "
   type = number
 }
 
