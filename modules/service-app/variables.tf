@@ -53,3 +53,7 @@ variable "app_access_security_group_id" {
 variable "container_image" {
   type        = string
 }
+
+variable "service_discovery_id" {
+  type = string
+}

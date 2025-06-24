@@ -27,6 +27,25 @@ resource "aws_ecs_task_definition" "app_task_def" {
   ])
 }
 
+resource "aws_service_discovery_service" "app_service_discovery" {
+  name = "app"
+
+  dns_config {
+    namespace_id = var.service_discovery_id
+
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
+
+  health_check_custom_config {
+    failure_threshold = 1
+  }
+}
+
 # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
 resource "aws_lb_listener_rule" "app_service_listener_rule" {
   # ルールを追加するリスナー
