@@ -9,7 +9,7 @@ resource "aws_lambda_function" "point_service_batch" {
 
   vpc_config {
     subnet_ids         = [var.subnet_id_a, var.subnet_id_c]
-    security_group_ids = var.security_group_id
+    security_group_ids = [var.security_group_id]
   }
 
   environment {
