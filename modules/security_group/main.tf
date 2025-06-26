@@ -60,7 +60,7 @@ resource "aws_vpc_security_group_ingress_rule" "ecs_app_ingress_from_alb" {
   ip_protocol                  = "tcp"
   to_port                      = var.app_ingress_to_port
 }
-resource "aws_vpc_security_group_ingress_rule" "ecs_app_ingress_from_alb" {
+resource "aws_vpc_security_group_ingress_rule" "ecs_app_ingress_from_lambda" {
   security_group_id            = aws_security_group.app_ecs_sg.id
   referenced_security_group_id = aws_security_group.lambda_sg.id
   from_port                    = 0
