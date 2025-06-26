@@ -2,7 +2,7 @@ resource "aws_lb" "ecs_alb" {
   name                       = "test-lb-tf"
   internal                   = false
   load_balancer_type         = "application"
-  security_groups            = [var.app_ingress_to_port]
+  security_groups            = [var.alb_access_security_group_id]
   subnets                    = [var.public_a_subnet_id, var.public_c_subnet_id]
   enable_deletion_protection = false
   tags = {
