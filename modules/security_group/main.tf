@@ -60,6 +60,7 @@ resource "aws_vpc_security_group_ingress_rule" "ecs_app_ingress_from_alb" {
   ip_protocol                  = "tcp"
   to_port                      = var.app_ingress_to_port
 }
+
 resource "aws_vpc_security_group_ingress_rule" "ecs_app_ingress_from_lambda" {
   security_group_id            = aws_security_group.app_ecs_sg.id
   referenced_security_group_id = aws_security_group.lambda_sg.id
@@ -67,8 +68,6 @@ resource "aws_vpc_security_group_ingress_rule" "ecs_app_ingress_from_lambda" {
   ip_protocol                  = "tcp"
   to_port                      = 65530
 }
-
-
 
 resource "aws_vpc_security_group_egress_rule" "alb_egress_all_ipv4" {
   security_group_id = aws_security_group.app_alb_sg.id
@@ -84,6 +83,12 @@ resource "aws_vpc_security_group_egress_rule" "mysql_egress_all_ipv4" {
 
 resource "aws_vpc_security_group_egress_rule" "ecs_egress_all_ipv4" {
   security_group_id = aws_security_group.app_ecs_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
+
+resource "aws_vpc_security_group_egress_rule" "lambda_egress_all_ipv4" {
+  security_group_id = aws_security_group.lambda_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
