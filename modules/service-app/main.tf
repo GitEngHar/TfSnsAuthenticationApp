@@ -103,5 +103,9 @@ resource "aws_ecs_service" "app_service" {
     container_port   = var.container_port
   }
 
+  service_registries {
+    registry_arn = aws_service_discovery_service.app_service_discovery.arn
+  }
+
 }
 
