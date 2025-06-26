@@ -9,3 +9,7 @@ output "alb_access_security_group_id" {
 output "mysql_access_security_group_id" {
   value = aws_security_group.mysql_sg.id
 }
+
+output "lambda_access_security_group_id" {
+  value = aws_security_group.lambda_sg.id
+}
