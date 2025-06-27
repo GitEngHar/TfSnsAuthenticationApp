@@ -18,7 +18,9 @@ resource "aws_lambda_function" "point_service_batch" {
   environment {
     variables = var.lambda_environment
   }
-}resource "aws_lambda_function" "point_service_batch" {
+}
+
+resource "aws_lambda_function" "point_service_batch" {
   function_name = var.function-name
   role          = var.lambda_exec_role_arn
   runtime       = "provided.al2"
