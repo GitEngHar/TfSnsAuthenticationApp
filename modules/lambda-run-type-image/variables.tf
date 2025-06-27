@@ -26,3 +26,7 @@ variable "lambda_exec_role_arn" {
 variable "function-name" {
   type = string
 }
+
+variable "lambda_zip_path" {
+  type = string
+}
